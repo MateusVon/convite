@@ -1,0 +1,551 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Um convite especial 🌸</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Lato:wght@300;400&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      :root {
+        --pink: #f48fb1;
+        --pink-dark: #ec407a;
+        --pink-deep: #c2556e;
+        --pink-soft: #b56075;
+        --pink-pale: #fce4ec;
+        --pink-light: #fdf6f9;
+        --pink-card: #fff9fb;
+        --pink-border: #f7c5d8;
+        --pink-mid: #f0a8c4;
+        --pink-muted: #e899b4;
+        --text-dark: #9e3d5a;
+      }
+
+      html,
+      body {
+        min-height: 100%;
+        font-family: 'Lato', sans-serif;
+      }
+
+      body {
+        background: linear-gradient(
+          160deg,
+          var(--pink-pale) 0%,
+          var(--pink-light) 50%,
+          #fde8f0 100%
+        );
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 2rem 1rem;
+      }
+
+      /* pétala decorativa de fundo */
+      body::before {
+        content: '';
+        position: fixed;
+        top: -120px;
+        right: -120px;
+        width: 420px;
+        height: 420px;
+        background: radial-gradient(circle, #f8bbd055 0%, transparent 70%);
+        pointer-events: none;
+        z-index: 0;
+      }
+      body::after {
+        content: '';
+        position: fixed;
+        bottom: -100px;
+        left: -100px;
+        width: 380px;
+        height: 380px;
+        background: radial-gradient(circle, #fce4ec66 0%, transparent 70%);
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      #app {
+        position: relative;
+        z-index: 1;
+        width: 100%;
+        max-width: 540px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      /* ── screens ── */
+      .screen {
+        display: none;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 1.6rem;
+        width: 100%;
+        animation: fadeUp 0.55s cubic-bezier(0.22, 0.68, 0, 1.2) both;
+      }
+      .screen.active {
+        display: flex;
+      }
+
+      @keyframes fadeUp {
+        from {
+          opacity: 0;
+          transform: translateY(22px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      /* ── typography ── */
+      h1 {
+        font-family: 'Cormorant Garamond', serif;
+        font-weight: 300;
+        font-size: clamp(1.7rem, 5vw, 2.2rem);
+        color: var(--pink-deep);
+        line-height: 1.4;
+      }
+      h2 {
+        font-family: 'Cormorant Garamond', serif;
+        font-weight: 300;
+        font-size: clamp(1.35rem, 4vw, 1.7rem);
+        color: var(--pink-deep);
+        line-height: 1.45;
+      }
+      p {
+        font-size: 1rem;
+        font-weight: 300;
+        color: var(--pink-soft);
+        line-height: 1.75;
+      }
+
+      .flowers {
+        font-size: 1.5rem;
+        letter-spacing: 6px;
+      }
+      .emoji-big {
+        font-size: 3.2rem;
+      }
+
+      /* ── card ── */
+      .card {
+        background: var(--pink-card);
+        border: 1px solid var(--pink-border);
+        border-radius: 20px;
+        padding: 1.6rem 2rem;
+        width: 100%;
+      }
+
+      /* ── form ── */
+      label {
+        font-size: 0.9rem;
+        font-weight: 400;
+        color: var(--pink-soft);
+        display: block;
+        margin-bottom: 0.4rem;
+        text-align: left;
+        letter-spacing: 0.03em;
+      }
+
+      input[type='date'],
+      input[type='time'],
+      textarea {
+        width: 100%;
+        border: 1px solid var(--pink-mid);
+        border-radius: 10px;
+        padding: 0.6rem 0.95rem;
+        font-size: 0.95rem;
+        font-family: 'Lato', sans-serif;
+        font-weight: 300;
+        color: var(--text-dark);
+        background: #fff;
+        outline: none;
+        margin-bottom: 1.1rem;
+        transition: border-color 0.2s;
+        -webkit-appearance: none;
+      }
+      input[type='date']:focus,
+      input[type='time']:focus,
+      textarea:focus {
+        border-color: var(--pink-dark);
+      }
+      textarea {
+        resize: vertical;
+        min-height: 90px;
+      }
+
+      /* ── buttons ── */
+      .btn-yes {
+        background: var(--pink);
+        color: #fff;
+        border: none;
+        border-radius: 50px;
+        padding: 0.8rem 2.4rem;
+        font-size: 1rem;
+        font-family: 'Lato', sans-serif;
+        font-weight: 400;
+        cursor: pointer;
+        transition:
+          background 0.2s,
+          transform 0.15s;
+        box-shadow: 0 4px 18px #f48fb133;
+        letter-spacing: 0.04em;
+      }
+      .btn-yes:hover {
+        background: var(--pink-dark);
+        transform: scale(1.05);
+      }
+
+      .btn-no {
+        background: transparent;
+        color: var(--pink-muted);
+        border: 1.5px solid var(--pink-mid);
+        border-radius: 50px;
+        padding: 0.8rem 2.4rem;
+        font-size: 1rem;
+        font-family: 'Lato', sans-serif;
+        font-weight: 300;
+        cursor: pointer;
+        position: fixed;
+        transition:
+          left 0.2s ease,
+          top 0.2s ease;
+        user-select: none;
+        z-index: 999;
+        letter-spacing: 0.04em;
+      }
+
+      .btn-primary {
+        background: var(--pink);
+        color: #fff;
+        border: none;
+        border-radius: 50px;
+        padding: 0.8rem 2.6rem;
+        font-size: 1rem;
+        font-family: 'Lato', sans-serif;
+        font-weight: 400;
+        cursor: pointer;
+        transition:
+          background 0.2s,
+          transform 0.15s;
+        box-shadow: 0 4px 18px #f48fb133;
+        letter-spacing: 0.04em;
+      }
+      .btn-primary:hover {
+        background: var(--pink-dark);
+        transform: scale(1.04);
+      }
+      .btn-primary:disabled {
+        background: #f0c0d0;
+        cursor: not-allowed;
+        transform: none;
+      }
+
+      .btn-row {
+        display: flex;
+        gap: 1.2rem;
+        justify-content: center;
+        flex-wrap: wrap;
+        min-height: 56px;
+        align-items: center;
+      }
+
+      /* ── summary ── */
+      .summary-line {
+        font-family: 'Cormorant Garamond', serif;
+        font-weight: 300;
+        font-size: 1.1rem;
+        color: var(--text-dark);
+        line-height: 2;
+      }
+      .summary-line strong {
+        font-weight: 400;
+        color: var(--pink-deep);
+      }
+
+      /* ── status & footer ── */
+      #save-status {
+        font-size: 0.85rem;
+        color: var(--pink-soft);
+        min-height: 1.2em;
+      }
+
+      footer {
+        margin-top: 1.4rem;
+        font-family: 'Cormorant Garamond', serif;
+        font-style: italic;
+        font-size: 1rem;
+        color: #d4849c;
+        line-height: 1.8;
+      }
+
+      /* divider */
+      .divider {
+        width: 60px;
+        height: 1px;
+        background: var(--pink-border);
+        margin: 0 auto;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <!-- Tela 1 — Convite -->
+      <div class="screen active" id="screen1">
+        <div class="flowers">🌸 🌷 🌸</div>
+        <h1>Duda, você aceitaria<br />sair comigo?</h1>
+        <div class="btn-row">
+          <button class="btn-yes" onclick="goToScreen2()">Sim 💗</button>
+          <button class="btn-no" id="btn-no">Não</button>
+        </div>
+      </div>
+
+      <!-- Tela 2 — Alívio -->
+      <div class="screen" id="screen2">
+        <div class="emoji-big">😮‍💨</div>
+        <h1>Ufa!</h1>
+        <div class="divider"></div>
+        <p>
+          Achei que você não fosse aceitar...<br />Fico muito feliz que tenha
+          aceitado 🙂
+        </p>
+        <button class="btn-primary" onclick="goToScreen3()">Continuar →</button>
+      </div>
+
+      <!-- Tela 3 — Data e hora -->
+      <div class="screen" id="screen3">
+        <div class="flowers">🌷 🌸 🌷</div>
+        <h2>Agora que aceitou, me diz:</h2>
+        <div class="card">
+          <label>Que dia você prefere?</label>
+          <input type="date" id="chosen-date" />
+          <label>E que horas?</label>
+          <input type="time" id="chosen-time" />
+        </div>
+        <button class="btn-primary" onclick="goToScreen4()">Próximo →</button>
+      </div>
+
+      <!-- Tela 4 — Local -->
+      <div class="screen" id="screen4">
+        <div class="flowers">🌸 🌷 🌸</div>
+        <h2>Obrigado por ter aceitado!</h2>
+        <p>Devo te buscar em casa<br />ou em algum outro lugar?</p>
+        <div class="card">
+          <label>Onde você quer que eu te busque?</label>
+          <textarea
+            id="chosen-place"
+            placeholder="Ex: em casa, no trabalho, na praça..."
+          ></textarea>
+        </div>
+        <div id="save-status"></div>
+        <button
+          class="btn-primary"
+          id="btn-confirm"
+          onclick="submitAndContinue()"
+        >
+          Confirmar 💗
+        </button>
+      </div>
+
+      <!-- Tela 5 — Resumo final -->
+      <div class="screen" id="screen5">
+        <div class="emoji-big">🌹</div>
+        <h2>Está combinado então!</h2>
+        <div class="card">
+          <p class="summary-line">
+            Vou te encontrar em <strong id="s-place">—</strong>,<br />
+            às <strong id="s-time">—</strong> do dia
+            <strong id="s-date">—</strong>.
+          </p>
+          <br />
+          <div class="divider"></div>
+          <br />
+          <p style="font-size: 0.95rem">
+            A escolha do local depende da data e do horário,<br />
+            então te confirmo no WhatsApp como você deve se vestir.<br />
+            Pode ser algo bem básico, mas pode ser algo<br />
+            um pouquinho mais elaborado também. 🙂
+          </p>
+        </div>
+        <footer>
+          Obrigado, Duda 💗<br />
+          Mal posso esperar!
+        </footer>
+      </div>
+    </div>
+
+    <script>
+      let chosenDate = '',
+        chosenTime = '',
+        chosenPlace = '';
+      const btnNo = document.getElementById('btn-no');
+      let placed = false;
+      const TRIGGER_DIST = 55;
+
+      function formatDateBR(v) {
+        if (!v) return '—';
+        const [y, m, d] = v.split('-');
+        return d + '/' + m + '/' + y;
+      }
+
+      function goToScreen2() {
+        document.getElementById('screen1').classList.remove('active');
+        document.getElementById('screen2').classList.add('active');
+        btnNo.style.display = 'none';
+      }
+
+      function goToScreen3() {
+        document.getElementById('screen2').classList.remove('active');
+        document.getElementById('screen3').classList.add('active');
+      }
+
+      function goToScreen4() {
+        const d = document.getElementById('chosen-date').value;
+        const t = document.getElementById('chosen-time').value;
+        if (!d || !t) {
+          alert('Por favor, escolha uma data e um horário 🌸');
+          return;
+        }
+        chosenDate = d;
+        chosenTime = t;
+        document.getElementById('screen3').classList.remove('active');
+        document.getElementById('screen4').classList.add('active');
+      }
+
+      async function submitAndContinue() {
+        const pl = document.getElementById('chosen-place').value.trim();
+        if (!pl) {
+          alert('Conta pra mim onde te buscar 🌷');
+          return;
+        }
+        chosenPlace = pl;
+
+        const st = document.getElementById('save-status');
+        const btn = document.getElementById('btn-confirm');
+        btn.disabled = true;
+        st.textContent = 'Enviando...';
+
+        try {
+          const res = await fetch('https://formspree.io/f/mredneaw', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              Accept: 'application/json',
+            },
+            body: JSON.stringify({
+              data: formatDateBR(chosenDate),
+              horario: chosenTime,
+              local: chosenPlace,
+              enviado_em: new Date().toLocaleString('pt-BR'),
+            }),
+          });
+
+          if (res.ok) {
+            document.getElementById('s-date').textContent =
+              formatDateBR(chosenDate);
+            document.getElementById('s-time').textContent = chosenTime || '—';
+            document.getElementById('s-place').textContent = chosenPlace;
+            document.getElementById('screen4').classList.remove('active');
+            document.getElementById('screen5').classList.add('active');
+          } else {
+            st.textContent = 'Algo deu errado, tente novamente 🌸';
+            btn.disabled = false;
+          }
+        } catch (e) {
+          st.textContent = 'Erro de conexão, tente novamente 🌸';
+          btn.disabled = false;
+        }
+      }
+
+      /* ── botão fugitivo ── */
+      function initBtn() {
+        if (placed) return;
+        const app = document.getElementById('app');
+        const r = app.getBoundingClientRect();
+        const bw = btnNo.offsetWidth || 100,
+          bh = btnNo.offsetHeight || 44;
+        btnNo.style.left = r.left + r.width / 2 + 24 + 'px';
+        btnNo.style.top = r.top + r.height / 2 - bh / 2 + 'px';
+        placed = true;
+      }
+
+      function tryEscape(cx, cy) {
+        if (!document.getElementById('screen1').classList.contains('active'))
+          return;
+        initBtn();
+        const br = btnNo.getBoundingClientRect();
+        const bw = br.width,
+          bh = br.height;
+        const bcx = br.left + bw / 2,
+          bcy = br.top + bh / 2;
+        const dx = bcx - cx,
+          dy = bcy - cy;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist > TRIGGER_DIST) return;
+
+        const app = document.getElementById('app');
+        const r = app.getBoundingClientRect();
+
+        // tenta até 8 direções aleatórias até achar uma que não bata na borda
+        let nx,
+          ny,
+          tries = 0;
+        do {
+          const angle = Math.atan2(dy, dx) + (Math.random() - 0.5) * Math.PI;
+          const run = 130 + Math.random() * 70;
+          nx = bcx + Math.cos(angle) * run - bw / 2;
+          ny = bcy + Math.sin(angle) * run - bh / 2;
+          tries++;
+        } while (
+          tries < 8 &&
+          (nx < r.left + 4 ||
+            nx > r.right - bw - 4 ||
+            ny < r.top + 4 ||
+            ny > r.bottom - bh - 4)
+        );
+
+        // garante que nunca saia da área mesmo assim
+        nx = Math.max(r.left + 4, Math.min(r.right - bw - 4, nx));
+        ny = Math.max(r.top + 4, Math.min(r.bottom - bh - 4, ny));
+        btnNo.style.left = nx + 'px';
+        btnNo.style.top = ny + 'px';
+      }
+
+      document.addEventListener('mousemove', (e) =>
+        tryEscape(e.clientX, e.clientY),
+      );
+      document.addEventListener(
+        'touchmove',
+        (e) => {
+          if (e.touches) tryEscape(e.touches[0].clientX, e.touches[0].clientY);
+        },
+        { passive: true },
+      );
+      document.addEventListener(
+        'touchstart',
+        (e) => {
+          if (e.touches) tryEscape(e.touches[0].clientX, e.touches[0].clientY);
+        },
+        { passive: true },
+      );
+
+      btnNo.addEventListener('click', (e) => e.preventDefault());
+      btnNo.addEventListener('touchend', (e) => e.preventDefault());
+    </script>
+  </body>
+</html>
