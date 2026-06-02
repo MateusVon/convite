@@ -53,7 +53,6 @@
         padding: 2rem 1rem;
       }
 
-      /* pétala decorativa de fundo */
       body::before {
         content: '';
         position: fixed;
@@ -87,7 +86,6 @@
         align-items: center;
       }
 
-      /* ── screens ── */
       .screen {
         display: none;
         flex-direction: column;
@@ -112,7 +110,6 @@
         }
       }
 
-      /* ── typography ── */
       h1 {
         font-family: 'Cormorant Garamond', serif;
         font-weight: 300;
@@ -142,7 +139,6 @@
         font-size: 3.2rem;
       }
 
-      /* ── card ── */
       .card {
         background: var(--pink-card);
         border: 1px solid var(--pink-border);
@@ -151,7 +147,6 @@
         width: 100%;
       }
 
-      /* ── form ── */
       label {
         font-size: 0.9rem;
         font-weight: 400;
@@ -189,7 +184,6 @@
         min-height: 90px;
       }
 
-      /* ── buttons ── */
       .btn-yes {
         background: var(--pink);
         color: #fff;
@@ -205,10 +199,14 @@
           transform 0.15s;
         box-shadow: 0 4px 18px #f48fb133;
         letter-spacing: 0.04em;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-110%, -50%);
       }
       .btn-yes:hover {
         background: var(--pink-dark);
-        transform: scale(1.05);
+        transform: translate(-110%, -50%) scale(1.05);
       }
 
       .btn-no {
@@ -221,13 +219,13 @@
         font-family: 'Lato', sans-serif;
         font-weight: 300;
         cursor: pointer;
-        position: fixed;
+        position: absolute;
         transition:
-          left 0.2s ease,
-          top 0.2s ease;
+          left 0.18s ease,
+          top 0.18s ease;
         user-select: none;
-        z-index: 999;
         letter-spacing: 0.04em;
+        white-space: nowrap;
       }
 
       .btn-primary {
@@ -257,15 +255,13 @@
       }
 
       .btn-row {
-        display: flex;
-        gap: 1.2rem;
-        justify-content: center;
-        flex-wrap: wrap;
-        min-height: 56px;
-        align-items: center;
+        position: relative;
+        width: 100%;
+        height: 80px;
+        overflow: hidden;
+        border-radius: 16px;
       }
 
-      /* ── summary ── */
       .summary-line {
         font-family: 'Cormorant Garamond', serif;
         font-weight: 300;
@@ -278,7 +274,6 @@
         color: var(--pink-deep);
       }
 
-      /* ── status & footer ── */
       #save-status {
         font-size: 0.85rem;
         color: var(--pink-soft);
@@ -294,7 +289,6 @@
         line-height: 1.8;
       }
 
-      /* divider */
       .divider {
         width: 60px;
         height: 1px;
@@ -305,7 +299,7 @@
   </head>
   <body>
     <div id="app">
-      <!-- Tela 1 — Convite -->
+      <!-- Tela 1 -->
       <div class="screen active" id="screen1">
         <div class="flowers">🌸 🌷 🌸</div>
         <h1>Duda, você aceitaria<br />sair comigo?</h1>
@@ -315,7 +309,7 @@
         </div>
       </div>
 
-      <!-- Tela 2 — Alívio -->
+      <!-- Tela 2 -->
       <div class="screen" id="screen2">
         <div class="emoji-big">😮‍💨</div>
         <h1>Ufa!</h1>
@@ -327,7 +321,7 @@
         <button class="btn-primary" onclick="goToScreen3()">Continuar →</button>
       </div>
 
-      <!-- Tela 3 — Data e hora -->
+      <!-- Tela 3 -->
       <div class="screen" id="screen3">
         <div class="flowers">🌷 🌸 🌷</div>
         <h2>Agora que aceitou, me diz:</h2>
@@ -340,7 +334,7 @@
         <button class="btn-primary" onclick="goToScreen4()">Próximo →</button>
       </div>
 
-      <!-- Tela 4 — Local -->
+      <!-- Tela 4 -->
       <div class="screen" id="screen4">
         <div class="flowers">🌸 🌷 🌸</div>
         <h2>Obrigado por ter aceitado!</h2>
@@ -362,7 +356,7 @@
         </button>
       </div>
 
-      <!-- Tela 5 — Resumo final -->
+      <!-- Tela 5 -->
       <div class="screen" id="screen5">
         <div class="emoji-big">🌹</div>
         <h2>Está combinado então!</h2>
@@ -395,7 +389,8 @@
         chosenPlace = '';
       const btnNo = document.getElementById('btn-no');
       let placed = false;
-      const TRIGGER_DIST = 55;
+      const TRIGGER_DIST = 60;
+      const MARGIN = 8;
 
       function formatDateBR(v) {
         if (!v) return '—';
@@ -408,12 +403,10 @@
         document.getElementById('screen2').classList.add('active');
         btnNo.style.display = 'none';
       }
-
       function goToScreen3() {
         document.getElementById('screen2').classList.remove('active');
         document.getElementById('screen3').classList.add('active');
       }
-
       function goToScreen4() {
         const d = document.getElementById('chosen-date').value;
         const t = document.getElementById('chosen-time').value;
@@ -472,15 +465,22 @@
         }
       }
 
-      /* ── botão fugitivo ── */
+      /* ── botão fugitivo ──
+     Posição absolute dentro do .btn-row (container).
+     Usa as coordenadas do container como área de fuga.
+  */
+      const container = document.querySelector('.btn-row');
+
       function initBtn() {
         if (placed) return;
-        const app = document.getElementById('app');
-        const r = app.getBoundingClientRect();
-        const bw = btnNo.offsetWidth || 100,
-          bh = btnNo.offsetHeight || 44;
-        btnNo.style.left = r.left + r.width / 2 + 24 + 'px';
-        btnNo.style.top = r.top + r.height / 2 - bh / 2 + 'px';
+        const cr = container.getBoundingClientRect();
+        const bw = btnNo.offsetWidth || 110;
+        const bh = btnNo.offsetHeight || 44;
+        // posiciona à direita do centro, verticalmente centralizado
+        const x = cr.width / 2 + 10;
+        const y = (cr.height - bh) / 2;
+        btnNo.style.left = x + 'px';
+        btnNo.style.top = y + 'px';
         placed = true;
       }
 
@@ -488,42 +488,49 @@
         if (!document.getElementById('screen1').classList.contains('active'))
           return;
         initBtn();
+
+        const cr = container.getBoundingClientRect();
         const br = btnNo.getBoundingClientRect();
         const bw = br.width,
           bh = br.height;
-        const bcx = br.left + bw / 2,
-          bcy = br.top + bh / 2;
-        const dx = bcx - cx,
-          dy = bcy - cy;
+        const bcx = br.left + bw / 2;
+        const bcy = br.top + bh / 2;
+        const dx = bcx - cx;
+        const dy = bcy - cy;
         const dist = Math.sqrt(dx * dx + dy * dy);
         if (dist > TRIGGER_DIST) return;
 
-        const app = document.getElementById('app');
-        const r = app.getBoundingClientRect();
+        // limites dentro do container (coordenadas absolutas internas)
+        const maxX = cr.width - bw - MARGIN;
+        const maxY = cr.height - bh - MARGIN;
 
-        // tenta até 8 direções aleatórias até achar uma que não bata na borda
-        let nx,
-          ny,
-          tries = 0;
-        do {
-          const angle = Math.atan2(dy, dx) + (Math.random() - 0.5) * Math.PI;
-          const run = 130 + Math.random() * 70;
-          nx = bcx + Math.cos(angle) * run - bw / 2;
-          ny = bcy + Math.sin(angle) * run - bh / 2;
-          tries++;
-        } while (
-          tries < 8 &&
-          (nx < r.left + 4 ||
-            nx > r.right - bw - 4 ||
-            ny < r.top + 4 ||
-            ny > r.bottom - bh - 4)
-        );
+        const baseAngle = Math.atan2(dy, dx);
+        let bestX = null,
+          bestY = null;
 
-        // garante que nunca saia da área mesmo assim
-        nx = Math.max(r.left + 4, Math.min(r.right - bw - 4, nx));
-        ny = Math.max(r.top + 4, Math.min(r.bottom - bh - 4, ny));
-        btnNo.style.left = nx + 'px';
-        btnNo.style.top = ny + 'px';
+        for (let i = 0; i < 16; i++) {
+          const spread = (i / 8) * Math.PI;
+          const angle = baseAngle + (Math.random() - 0.5) * spread;
+          const run = 80 + Math.random() * 60;
+          // converter posição absoluta do container para coordenada interna
+          const nx = bcx - cr.left + Math.cos(angle) * run - bw / 2;
+          const ny = bcy - cr.top + Math.sin(angle) * run - bh / 2;
+
+          if (nx >= MARGIN && nx <= maxX && ny >= MARGIN && ny <= maxY) {
+            bestX = nx;
+            bestY = ny;
+            break;
+          }
+        }
+
+        // fallback: posição aleatória dentro do container
+        if (bestX === null) {
+          bestX = MARGIN + Math.random() * (maxX - MARGIN);
+          bestY = MARGIN + Math.random() * (maxY - MARGIN);
+        }
+
+        btnNo.style.left = bestX + 'px';
+        btnNo.style.top = bestY + 'px';
       }
 
       document.addEventListener('mousemove', (e) =>
